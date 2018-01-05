@@ -8,7 +8,7 @@ To bootstrap the project:
 
 ```shell
 pip install -r requirements.txt
-python manage.py migrate
 cd room_booking_project
+python manage.py migrate
 python manage.py runserver
 ```
