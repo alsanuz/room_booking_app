@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Booking" %} - {{ booking.id }}{% endblock %}
+
+{% block class_body %}booking-detail{% endblock %}
+
+{% block breadcrumb-content %}
+    <li class="breadcrumb-item active">
+        <a href="{% url "booking-list" %}">
+            {% trans "My bookings" %}
+        </a>
+    </li>
+    <li class="breadcrumb-item active">{% trans "Booking" %} - {{ booking.id }}</li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <h5 class="card-header">{% trans "Booking" %} - {{ booking.id }}</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img style="width: 200px;" src="
+                                {% if booking.room.image %}{{ booking.room.image.url }}{% endif %}"
+                                     class="img-thumbnail rounded float-left">
+                            </div>
+                            <div class="col-md-3">
+                                <p class="card-text"> {% trans "Price" %}: {{ booking.price }}</p>
+                                <p class="card-text"> {% trans "Room" %}: {{ booking.room }}</p>
+                                <p class="card-text"> {% trans "Credit card" %}:
+                                    {{ booking.credit_card }}</p>
+
+                            </div>
+                            <div class="col-md-3">
+                                <p class="card-text"> {% trans "Locator" %}: {{ booking.locator }}</p>
+                                <p class="card-text"> {% trans "Start date" %}: {{ booking.start_date }}</p>
+                                <p class="card-text"> {% trans "End date" %}: {{ booking.end_date }}</p>
+                            </div>
+                        </div>
+
+                        <a href="{% url 'download-booking-pdf' booking.id %}" class="btn btn-info
+                        float-right"
+                        >{% trans "Donwload PDF" %}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

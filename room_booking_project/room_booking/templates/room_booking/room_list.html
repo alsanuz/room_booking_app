@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load i18n room_booking_extras %}
+
+{% block title %}{% trans "Room Booking project" %}{% endblock %}
+{% block class_body %}main-page{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {% include "room_booking/room_search.html" %}
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>{% trans "Rooms" %}</h2>
+            </div>
+        </div>
+        <div class="row">
+            {% for room in object_list %}
+                <div class="col-md-3">
+                    <div class="card">
+                        <img class="card-img-top"
+                             src="{% if room.image %}{{ room.image.url }}{% endif %}">
+                        <div class="card-body">
+                            <h5 class="card-title">{% trans "Room" %} - {{ room.id }}</h5>
+                            <div class="card-text">
+                                <p><b>{% trans "Type" %}:</b> {{ room.type|capfirst }}</p>
+                                <p><b>{% trans "Max people allowed" %}:</b>
+                                    {{ room.max_people_allowed }}</p>
+                                {% if total_booking_days %}
+                                    <p><b>{% trans "Total price for " %} {{ total_booking_days }}
+                                        {% trans "days" %}:</b>
+                                        {% multiply total_booking_days room.price %}
+                                    </p>
+                                {% endif %}
+                            </div>
+                            <a class="btn btn-primary"
+                               href="
+{% url "confirm-booking" room.id request.GET.start_date request.GET.end_date request.GET.amount_people total_booking_days %}">
+                                {% trans "Book room" %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-md-12">
+                    <div class="alert alert-info" role="alert">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        {% trans "No rooms available for this dates" %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% load i18n %}
+
+<div class="col-md-8 offset-2">
+    <form action="." method="get">
+        <div class="form-group input-group">
+            <input type="date" class="form-control" name="start_date" placeholder="
+            {% trans "Start date" %}" value="{{ request.GET.start_date }}"
+                   required="required"/>
+            <input type="date" class="form-control" name="end_date"
+                   placeholder="{% trans "End date" %}"
+                   value="{{ request.GET.end_date }}" required="required"/>
+            <input type="number" class="form-control" name="amount_people"
+                   placeholder="{% trans "Amount people" %}" required="required"
+                   value="{{ request.GET.amount_people }}" min="1"/>
+            <span class="input-group-btn">
+            <button class="btn btn-secondary" type="submit">
+                {% trans "Search" %} <i class="fa fa-search"></i>
+            </button>
+        </span>
+        </div>
+    </form>
+</div>

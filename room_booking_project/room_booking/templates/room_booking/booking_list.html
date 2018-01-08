@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "My bookings" %}{% endblock %}
+
+{% block class_body %}my-bookings{% endblock %}
+
+{% block breadcrumb-content %}
+    <li class="breadcrumb-item active">{% trans "My bookings" %}</li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>{% trans "My bookings" %}</h2>
+            </div>
+        </div>
+        <div class="row">
+            {% for booking in object_list %}
+                <div class="col-md-3">
+                    <div class="card">
+                        <img class="card-img-top"
+                             src="
+
+
+                                     {% if booking.room.image %}{{ booking.room.image.url }}{% endif %}">
+                        <div class="card-body">
+                            <h5 class="card-title">{% trans "Booking" %} - {{ booking.id }}</h5>
+                            <div class="card-text">
+                                <p><b>{% trans "Type" %}:</b> {{ booking.room.type|capfirst }}</p>
+                                <p><b>{% trans "Amount people" %}:</b>
+                                    {{ booking.amount_people }}</p>
+                                <p><b>{% trans "Total price" %}:</b>
+                                    {{ booking.price }}
+                                </p>
+                            </div>
+                            <a class="btn btn-primary" href="{% url "booking-detail" booking.id %}">
+                                {% trans "See booking" %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-md-12">
+                    <div class="alert alert-info" role="alert">
+                        <i class="fa fa-info-circle"></i>
+                        {% trans "You hasn't room bookings" %}
+                        <a class="btn btn-info " href="{% url "room-list" %}">
+                            {% trans "Search a room" %}</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}
